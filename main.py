@@ -30,37 +30,44 @@ def process_request(query: str) -> str:
 
 
 def voice_assistant(debug=False):
-    rec = sr.Recognizer()
-    mic = sr.Microphone()
-    if debug: print('Удачно инициализирован микрофон и распознаватель речь')
-    speech_engine = pyttsx3.init()
-    speech_engine.setProperty('voice', 'ru')
-    if debug: print('Удачно инициализирован генератор речи')
+    recognizer = sr.Recognizer()
+    microphone = sr.Microphone()
+    if debug:
+        print('Удачно инициализирован микрофон и распознаватель речь')
+    tts = pyttsx3.init()
+    if debug:
+        print('Удачно инициализирован генератор речи')
     while True:
-        with mic as source:
+        with microphone as source:
             print('Говорите')
-            audio = rec.listen(source)
+            audio = recognizer.listen(source)
         try:
-            query = rec.recognize_google(audio, language='ru-RU')
+            query = recognizer.recognize_google(audio, language='ru-RU')
         except sr.UnknownValueError:
             query = 'Я не поняла ваш запрос, пожалуйста, повторите'
-        if debug: print(f'Услышан запрос: {query}')
+        if debug:
+            print(f'Услышан запрос: {query}')
         result = process_request(query)
-        if debug: print(f'Ответ на запрос: {result}')
-        speech_engine.say(result)
-        speech_engine.runAndWait()
-        if result == bye_msg:
-            exit()
-        if debug: print('Голосовой генератор завершил работу')
+        if debug:
+            print(f'Ответ на запрос: {result}')
+        tts.say(result)
+        tts.runAndWait()
+        if result == bye_msg: exit()
+        if debug:
+            print('Голосовой генератор завершил работу')
+
+
+def text_assistant(debug=False):
+    while True:
+        text = input('> ')
+        print(process_request(text))
 
 
 if __name__ == '__main__':
-    communication_type = 0
+    communication_type = None
     while communication_type not in ('1', '2'):
         communication_type = input('Как бы вы хотели общаться:\n1. Сообщения\n2. Говорить\n> ')
     if communication_type == '1':
-        while True:
-            text = input('> ')
-            print(process_request(text))
+        text_assistant()
     else:
         voice_assistant()

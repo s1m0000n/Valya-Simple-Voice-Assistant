@@ -30,10 +30,10 @@ class IntentKeywords:
 
 
 class WeatherIntent:
-    def __init__(self, city='москва'):
+    def __init__(self, city: str = 'москва'):
         self.city = city
 
-    def __call__(self, *args, **kwargs) -> str:
+    def __call__(self) -> str:
         with open('sample_weather.csv', mode='r') as file:
             reader = csv.reader(file, delimiter=',')
             for row in reader:
@@ -46,7 +46,7 @@ class WhoIsIntent:
     def __init__(self, obj: str):
         self.obj = obj
 
-    def __call__(self, *args, **kwargs) -> str:
+    def __call__(self) -> str:
         with open('sample_whois.csv', mode='r') as file:
             reader = csv.reader(file, delimiter=';')
             for row in reader:
@@ -59,7 +59,7 @@ class HelloIntent:
     def __init__(self, _):
         pass
 
-    def __call__(self):
+    def __call__(self) -> str:
         return 'Привет, меня зовут Валя, я твой новый голосовой ассистент.'
 
 
@@ -67,7 +67,7 @@ class DontKnowIntent:
     def __init__(self, _):
         pass
 
-    def __call__(self):
+    def __call__(self) -> str:
         return 'Я не поняла ваш запрос. Моя функциональность постоянно расширяется, ваш язык очень трудный! Ха-ха!'
 
 
@@ -75,7 +75,7 @@ class ThanksIntent:
     def __init__(self, _):
         pass
 
-    def __call__(self):
+    def __call__(self) -> str:
         return 'Не за что, всегда готова придти на помощь!'
 
 
@@ -83,7 +83,7 @@ class HowAreYouIntent:
     def __init__(self, _):
         pass
 
-    def __call__(self):
+    def __call__(self) -> str:
         return 'У меня всё хорошо, занимаюсь своими делами, ем оперативную память. А у вас как?'
 
 
@@ -91,7 +91,7 @@ class HAYAnswerReactionIntent:
     def __init__(self, _):
         pass
 
-    def __call__(self):
+    def __call__(self) -> str:
         return 'Это просто здорово. Я готова вам что-нибудь рассказать, только спросите.'
 
 
@@ -101,8 +101,9 @@ valya_intents = {
     IntentKeywords(('пока', 'выход')): 'До скорой встречи!',
     IntentKeywords(('привет', 'здравствуй', 'здравствуйте', ('добрый', 'день'), ('добрый', 'вечер'))): HelloIntent,
     IntentKeywords(('спасибо',)): ThanksIntent,
-    IntentKeywords((('как', 'дела'), ('как', 'делишки'), ('как', 'дело'),
-                    ('как', 'поживать'), ('что', 'новый'),)): HowAreYouIntent,
+    IntentKeywords(('дело', 'поживать', ('как', 'дела'), ('как', 'делишки'), ('как', 'дело'),
+                    ('как', 'поживать'), ('что', 'новый'))): HowAreYouIntent,
     IntentKeywords(('хорошо', 'отлично', 'нормально', 'хороший',
-                    'отличный', 'нормальный', 'чудесно', 'чудесный')): HAYAnswerReactionIntent,
+                    'отличный', 'нормальный', 'чудесно', 'чудесный',
+                    'норм', 'норма', 'ок', 'окей', 'супер')): HAYAnswerReactionIntent,
 }
