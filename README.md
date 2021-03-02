@@ -3,9 +3,15 @@
 Презентация: https://docs.google.com/presentation/d/1tCUSbKBlnvmMcx3yQhRrmCamL6jyi1VSseDhiBc17WI/edit?usp=sharing
 
 ## Установка и использование для Linux и macOS
-
 Убедитесь, что у вас есть Python 3.7 и новее
 Если его нет, то установите из системных репозиториев или согласно инструкциям на сайте
+
+### Систменые зависимости Linux
+`sudo apt update && sudo apt install espeak ffmpeg libespeak1 portaudio`
+
+### Системные зависимости macOS
+Установите Homebrew, если он у вас ещё не установлен
+`brew install portaudio`
 
 ### Создайте виртуальное окружение и войдите в него(опционально, желательно)
 ```
@@ -21,5 +27,5 @@ source venv/bin/activate
 
 ### Проблемы с работой
 Скорее всего проблемы с `pyaudio`, поскольку ей нужна ещё одна системная зависимость
-Попробуйте установить `portaudio` на macOS через brew или через ваш пакетный менеджер в Linux
+Попробуйте ещё раз установить `portaudio` на macOS через brew или через ваш пакетный менеджер в Linux
 https://pypi.org/project/PyAudio/
